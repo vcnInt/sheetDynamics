@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+	<META http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+	<!--
+		Copyright animDynamicCSS3transitions Daniel Wiesenaecker
+
+		animDynamicCSS3transitions is free software: you can redistribute it and/or modify
+		it under the terms of the GNU General Public License as published by
+		the Free Software Foundation, either version 3 of the License, or
+		(at your option) any later version.
+
+		animDynamicCSS3transitions is distributed in the hope that it will be useful,
+		but WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+		GNU General Public License for more details.
+
+		You should have received a copy of the GNU General Public License
+		along with animDynamicCSS3transitions.  If not, see <http://www.gnu.org/licenses/>.
+	-->
+	<TITLE>
+		animDynamicCSS3transitions - version 0.328.10.59a
+	</TITLE>
+	<SCRIPT language="JavaScript" type="text/JavaScript" src="./isNum.js">
+	</SCRIPT>
+	<SCRIPT language="JavaScript" type="text/JavaScript" src="./tokenize.js">
+	</SCRIPT>
+	<SCRIPT language="JavaScript" type="text/JavaScript" src="./urlGet.js">
+	</SCRIPT>
+	<SCRIPT language="JavaScript" type="text/JavaScript" src="./compatibleSize.js">
+	</SCRIPT>
+	<SCRIPT language="JavaScript" type="text/JavaScript" src="./trunkGeom.js">
+	</SCRIPT>
+	<SCRIPT language="JavaScript" type="text/JavaScript" src="./cssGetta.js">
+	</SCRIPT>
+	<SCRIPT language="JavaScript" type="text/JavaScript" src="./CSS3trn.js">
+	</SCRIPT>
+	<SCRIPT language="JavaScript" type="text/JavaScript" src="./sheetDyn.js">
+	</SCRIPT>
+	<SCRIPT language="JavaScript" type="text/JavaScript" src="./showNhide.js">
+	</SCRIPT>
+	<SCRIPT language="JavaScript" type="text/JavaScript" src="./frameCentInfo.js">
+	</SCRIPT>
+	<SCRIPT language="JavaScript" type="text/JavaScript" src="./animDynamicCSSTransition.js">
+	</SCRIPT>
+	<SCRIPT language="JavaScript" type="text/JavaScript">
+	var tst=null;
+	function _init(){
+		enableGPU(document.body.style, 0);
+		
+		var itsIFrameNode=clientFrame.getIFrameNode("./content1.htm", false, 5, -800, 0, false, true);
+		
+		
+		tst=new AnimatedNodeItem(itsIFrameNode);
+		
+		
+		
+		document.body.appendChild(tst.itsFirstChild);
+		
+		tst.setOrigin(getScreenWidth(), 0);
+		
+		
+		clientFrame.makeVisible(true);
+		
+		tst.init(100, "huhu");
+		setTimeout("tst.setRightOut();", 100);
+		setTimeout("tst.slideLeftIn(0.4);", 1000);
+		setTimeout("tst.resetToOrigin();", 3000);
+		setTimeout("tst.slideLeftIn(1);", 5000);
+		//setTimeout("tst.resetToOrigin();", 7000);
+		setTimeout("tst.setLeftOut();", 7000);
+		setTimeout("tst.slideRightIn(1);", 10000);
+		
+		clientFrame.makeVisible(true);
+	}
+	
+	</SCRIPT>
+</HEAD>
+<BODY style="background-color: #CCCCCC; overflow: hidden; margin: 0px;" onload="_init();" >
+
+<SCRIPT language="JavaScript" type="text/JavaScript">
+	var clientFrame = new FrameInfo();
+
+	clientFrame.init();
+
+	clientFrame.setSize(800, 500);
+
+	clientFrame.setMinimumSize(800, 500);
+
+	clientFrame.setPreferedSize(800, 500);
+	
+	</SCRIPT>
+</BODY>
+</HTML>
