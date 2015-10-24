@@ -1,6 +1,6 @@
 /*
 
-Copyright ©2013 Daniel Wiesen?cker
+Copyright (C)2013 Daniel Wiesenaecker
 
 
 
