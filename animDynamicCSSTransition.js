@@ -19,13 +19,6 @@ Copyright (C)2015 Daniel Wiesenaecker
 
 */
 
-function getOpacityTransformString(opacity){
-	var retval="opacity:" + (opacity<100?(opacity<10?"0.0" + opacity:"0." + opacity):"1.00") + "; ";
-	if(window.navigator.userAgent.toUpperCase().indexOf("TRIDENT")!=-1) retval="filter: alpha(opacity=" + opacity + ");";
-	return retval;
-}
-
-
 function AnimatedNodeItem(initnode, parent, sheet){
 	hasSheet=sheet?true:false;
 	this.parent=parent;
