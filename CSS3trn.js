@@ -35,7 +35,7 @@ Copyright (C)2014 Daniel Wiesenaecker
 		return retval;
 	}
 
-	function getOpacityString(opacity){
+	function getOpacityTransformString(opacity){
 		var retval="opacity:" + (opacity<100?(opacity<10?"0.0" + opacity:"0." + opacity):"1.00") + "; ";
 		if(window.navigator.userAgent.toUpperCase().indexOf("TRIDENT")!=-1) retval="filter: alpha(opacity=" + opacity + ");";
 		return retval;
