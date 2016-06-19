@@ -19,7 +19,7 @@ Copyright (C)2014 Daniel Wiesenaecker
 
 */
 	function getKnownPrefixes(){
-		return ["webkit", "moz", "ms", "o"];
+		return ["webkit", "moz", "ms", "o", "khtml", "khtml", "sand"];
 	}
 	
 	function getPropertyCompatibilityList(plainProp){
@@ -123,4 +123,41 @@ Copyright (C)2014 Daniel Wiesenaecker
 	function setTransformStyle(style, hint){
 		transformStyleProp=transformStyleProp==null?getsupportedprop(transformStylePropertyCompList):transformStyleProp;
 		style[transformStyleProp]="" + hint + "";			
+	}
+	
+	
+	var borderTopLeftRadiusPropertyCompList=getPropertyCompatibilityList("borderTopLeftRadius");
+	
+	var borderTopLeftRadiusProp=null; //has to be null !!!
+	
+	function setTopLeftRadius(style, r){
+		borderTopLeftRadiusProp=borderTopLeftRadiusProp==null?getsupportedprop(borderTopLeftRadiusPropertyCompList):borderTopLeftRadiusProp;
+		style[borderTopLeftRadiusProp]=Math.floor(r) + "px";			
+	}
+	
+	var borderTopRightRadiusPropertyCompList=getPropertyCompatibilityList("borderTopRightRadius");
+	
+	var borderTopRightRadiusProp=null; //has to be null !!!
+	
+	function setTopRightRadius(style, r){
+		borderTopRightRadiusProp=borderTopRightRadiusProp==null?getsupportedprop(borderTopRightRadiusPropertyCompList):borderTopRightRadiusProp;
+		style[borderTopRightRadiusProp]=Math.floor(r) + "px";			
+	}
+	
+	var borderBottomLeftRadiusPropertyCompList=getPropertyCompatibilityList("borderBottomLeftRadius");
+	
+	var borderBottomLeftRadiusProp=null; //has to be null !!!
+	
+	function setBottomLeftRadius(style, r){
+		borderBottomLeftRadiusProp=borderBottomLeftRadiusProp==null?getsupportedprop(borderBottomLeftRadiusPropertyCompList):borderBottomLeftRadiusProp;
+		style[borderBottomLeftRadiusProp]=Math.floor(r) + "px";			
+	}
+	
+	var borderBottomRightRadiusPropertyCompList=getPropertyCompatibilityList("borderBottomRightRadius");
+	
+	var borderBottomRightRadiusProp=null; //has to be null !!!
+	
+	function setBottomRightRadius(style, r){
+		borderBottomRightRadiusProp=borderBottomRightRadiusProp==null?getsupportedprop(borderBottomRightRadiusPropertyCompList):borderBottomRightRadiusProp;
+		style[borderBottomRightRadiusProp]=Math.floor(r) + "px";			
 	}
