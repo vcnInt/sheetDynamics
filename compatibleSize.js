@@ -1,4 +1,4 @@
-function getHeight(ddl){
+	function getHeight(ddl){
 		var body = ddl.body,
 		html = ddl.documentElement;
 		var height = Math.max( parseInt(body.scrollHeight), parseInt(body.offsetHeight), parseInt(html.clientHeight), parseInt(html.scrollHeight), parseInt(html.offsetHeight) );

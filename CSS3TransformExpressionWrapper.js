@@ -190,10 +190,9 @@ Copyright ©2014 Daniel Wiesenäcker
 			this.skewY=parallel;
 		}
 		
-		this.getTransformString=function(apnd){
-			apnd=apnd?apnd:"";
+		this.getTransformString=function(){
 			var retval=(this.itsRoationSimpleEnabled)?("rotate(" + this.rot + "deg) "):"";
-			var apnd=apnd + " ";
+			var apnd="";
 			if(this.its3dRotationEnabled) for(var v=0; v<this.its3dRotation.length; v++){
 				switch(this.its3dRotation[v].getAxis()){
 					case Coordinate.prototype.X:
@@ -231,4 +230,10 @@ Copyright ©2014 Daniel Wiesenäcker
 			
 			return retval;		
 		}
+	}
+	
+	function getOpacityTransformString(opacity){
+		var retval="opacity:" + (opacity<100?(opacity<10?"0.0" + opacity:"0." + opacity):"1.00") + "; ";
+		if(window.navigator.userAgent.toUpperCase().indexOf("TRIDENT")!=-1) retval="filter: alpha(opacity=" + opacity + ");";
+		return retval;
 	}

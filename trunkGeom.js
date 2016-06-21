@@ -1,5 +1,5 @@
 /*
-Copyright (C)2012 Daniel Wiesenaecker
+Copyright ©2012 Daniel Wiesenäcker
 
     
     This file is part of NiblorTeq.

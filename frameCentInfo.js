@@ -1,6 +1,6 @@
 /*
 
-Copyright (C)2013 Daniel Wiesenaecker
+Copyright ©2013 Daniel Wiesen?cker
 
 
 
@@ -139,13 +139,13 @@ Copyright (C)2013 Daniel Wiesenaecker
 					mobileExecTag.setAttribute("content", "width=device-width, user-scalable=no");
 					document.head.appendChild(mobileExecTag);
 				}catch(e){
-					//document.writeln("<meta name=\"viewport\" content=\"width=device-width, user-scalable=no\">");
+					document.writeln("<meta name=\"viewport\" content=\"width=device-width, user-scalable=no\">");
 				}finally{
 					;
 				}
-				//document.writeln((navigator.userAgent.toLowerCase().indexOf("netscape")==-1?"<DIV id=\"" + "\" style=\"position: absolute; left: 0px; top: 0px; width: " + (this.embedSize!=null?(this.embedSize.width + "px") :"100%") +  "; height: " + (this.embedSize!=null?(this.embedSize.height + "px") :"100%") + ";  z-index: 0; \">":"") + "<TABLE style=\"width: " + (this.embedSize!=null?(this.embedSize.width + "px") :"100%") +  "; height: " + (this.embedSize!=null?(this.embedSize.height + "px") :"100%") + "; \"><TR><TD style=\"width: " + (this.embedSize!=null?(this.embedSize.width + "px") :"100%") +  "; height: " + (this.embedSize!=null?(this.embedSize.height + "px") :"100%") + "; \">&nbsp;</TD></TR></TABLE>" + (navigator.userAgent.toLowerCase().indexOf("netscape")==-1?"</DIV>":""));
-				//FROZEN BUG
-			}
+				document.writeln((navigator.userAgent.toLowerCase().indexOf("netscape")==-1?"<DIV id=\"" + "\" style=\"position: absolute; left: 0px; top: 0px; width: " + (this.embedSize!=null?(this.embedSize.width + "px") :"100%") +  "; height: " + (this.embedSize!=null?(this.embedSize.height + "px") :"100%") + ";  z-index: 0; \">":"") + "<TABLE style=\"width: " + (this.embedSize!=null?(this.embedSize.width + "px") :"100%") +  "; height: " + (this.embedSize!=null?(this.embedSize.height + "px") :"100%") + "; \"><TR><TD style=\"width: " + (this.embedSize!=null?(this.embedSize.width + "px") :"100%") +  "; height: " + (this.embedSize!=null?(this.embedSize.height + "px") :"100%") + "; \">&nbsp;</TD></TR></TABLE>" + (navigator.userAgent.toLowerCase().indexOf("netscape")==-1?"</DIV>":""));
+			}			
+
 
 			this.size=new Dimension(getScreenWidth(), getScreenHeight());
 
@@ -352,11 +352,6 @@ Copyright (C)2013 Daniel Wiesenaecker
 
 				;
 
-			}finally{
-				try{
-					document.getElementById(this.fId).style.visibility=b?SHOW:HIDE;
-				}catch(e){
-				}
 			}
 
 		}
@@ -389,20 +384,15 @@ Copyright (C)2013 Daniel Wiesenaecker
 			observe=true;
 			
 			var layerNode=document.createElement("DIV");
-			layerNode.style.visibility=HIDE;
 			if(!nopos){
 				layerNode.style.position="absolute";
-				
-				layerNode.style.left=(norel?relX:(this.innerFrame.getPoint().getX()+relX)) + "px";
-				layerNode.style.top=(norel?relY:(this.innerFrame.getPoint().getY()+relY)) + "px";
+				layerNode.style.left=(norel?relX:(this.innerFrame.getPoint().getX())) + "px";
+				layerNode.style.top=(norel?relY:(this.innerFrame.getPoint().getY())) + "px";
 			}
 			layerNode.style.width=(this.innerFrame.getSize().width) + "px";
-			layerNode.style.zIndex=zindex;
 			layerNode.style.height=(this.innerFrame.getSize().height) + "px";
-			layerNode.id=this.layerId;
 			
 			var iframeNode=document.createElement("IFRAME");
-			iframeNode.style.visibility=HIDE;
 			iframeNode.name=this.fName;
 			iframeNode.id=this.fId;
 			iframeNode.src=isUrl;
@@ -417,7 +407,32 @@ Copyright (C)2013 Daniel Wiesenaecker
 		}
 		
 		this.appendIFrameNode=function(appendTo, isUrl, scrolling, zindex, relX, relY, norel){
-			appendTo.appendChild(this.getIFrameNode(isUrl, scrolling, zindex, relX, relY, norel, false));
+			var netscape=navigator.userAgent.toLowerCase().indexOf("netscape")!=-1?true:false;
+			norel=norel?norel:false;
+			scrolling=scrolling?(netscape?true:scrolling):(netscape?true:false);
+
+			relX=relX?relX:0;
+
+			relY=relY?relY:0;			
+
+			zindex=zindex?zindex:1;
+
+			isUrl+=(isUrl.indexOf("?")!=-1?"&":"?") + "cent=YES&" + this.toString();
+
+		
+			observe=true;
+			
+			var iframeNode=document.createElement("IFRAME");
+			iframeNode.name=this.fName;
+			iframeNode.id=this.fId;
+			iframeNode.src=isUrl;
+			iframeNode.width=this.innerFrame.getSize().width;
+			iframeNode.height=this.innerFrame.getSize().height;
+			iframeNode.setAttribute("frameborder", "0");
+			if(!scrolling) iframeNode.setAttribute("scrolling", "no");
+			iframeNode.setAttribute("allowtransparency", "true");
+			iframeNode.style.backgroundColor="transparent";
+			appendTo.appendChild(iframeNode);
 			return appendTo;
 		}
 
@@ -457,26 +472,6 @@ Copyright (C)2013 Daniel Wiesenaecker
 			isUrl+=(isUrl.indexOf("?")!=-1?"&":"?") + "cent=YES&" + this.toString();
 			
 			document.writeln("<DIV id=\"" + this.layerId + "\" style=\"position: absolute; left: " + (this.innerFrame.itsPoint.getX()+relX)  + "px; top: " +   (this.innerFrame.itsPoint.getY()+relY)  + "px; width: " + this.innerFrame.getSize().width + "; height: " + this.innerFrame.getSize().height + "; z-index: " + zindex + "; visibility: " + HIDE + "; \"><IFRAME name=\"" + this.fName + "\" id=\"" + this.fId + "\" width=\"" + this.innerFrame.getSize().width +  "\" height=\"" + this.innerFrame.getSize().height + "\" src=\"" + isUrl + "\" frameborder=\"0\"" + (!scrolling?"scrolling=\"no\"":"") + " allowtransparency=\"true\" style=\"background-color: transparent; \"></IFRAME></DIV>");
-
-			observe=true;
-
-		}
-		
-		this.getLayerHTML = function(isUrl, scrolling, zindex, relX, relY, norel, nopos){
-
-			var netscape=navigator.userAgent.toLowerCase().indexOf("netscape")!=-1?true:false;
-
-			scrolling=scrolling?(netscape?true:scrolling):(netscape?true:false);
-
-			relX=relX?relX:0;
-
-			relY=relY?relY:0;			
-
-			zindex=zindex?zindex:1;
-
-			isUrl+=(isUrl.indexOf("?")!=-1?"&":"?") + "cent=YES&" + this.toString();
-			
-			return "<DIV id=\"" + this.layerId + "\" style=\"position: absolute; left: " + ((norel?relX:(this.innerFrame.getPoint().getX()+relX)) + "px")  + "; top: " +   ((norel?relY:(this.innerFrame.getPoint().getY()+relY)) + "px")  + "; width: " + Math.ceil(this.innerFrame.getSize().width) + "px; height: " + Math.ceil(this.innerFrame.getSize().height) + "px; z-index: " + zindex + "; visibility: " + HIDE + "; \"><IFRAME name=\"" + this.fName + "\" id=\"" + this.fId + "\" width=\"" + Math.ceil(this.innerFrame.getSize().width) +  "\" height=\"" + Math.ceil(this.innerFrame.getSize().height) + "\" src=\"" + isUrl + "\" frameborder=\"0\"" + (!scrolling?"scrolling=\"no\"":"") + " allowtransparency=\"true\" style=\"background-color: transparent; \"></IFRAME></DIV>";
 
 			observe=true;
 

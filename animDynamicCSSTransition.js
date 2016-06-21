@@ -1,5 +1,5 @@
-/*
-Copyright (C)2015 Daniel Wiesenaecker
+﻿/*
+Copyright ©2015 Daniel Wiesenäcker
 
     
     This file is part of animDynamicCSS3transitions.
@@ -19,8 +19,12 @@ Copyright (C)2015 Daniel Wiesenaecker
 
 */
 
-function AnimatedNodeItem(initnode, parent, sheet){
-	hasSheet=sheet?true:false;
+function AnimatedNodeMultiplexArray(){
+
+}
+
+
+function AnimatedNodeItem(initnode, parent){
 	this.parent=parent;
 	this.getParent=function(){
 		return this.parent;
@@ -30,7 +34,7 @@ function AnimatedNodeItem(initnode, parent, sheet){
 	this.screenSize=new Dimension(getScreenWidth(), getScreenHeight());
 	this.originPoint=null;
 	this.destPoint=null;
-	this.sheet=!hasSheet?deployStyleSheet():sheet;
+	this.sheet=deployStyleSheet();
 	this.itsResetCSSclassName="";// later improovements maybe experimental follow
 	this.itsMovementCSSclassName="";
 	this.itsCSSBaseClassName="";
@@ -38,10 +42,6 @@ function AnimatedNodeItem(initnode, parent, sheet){
 	this.opacity=-1;
 	this.lastPoint=null;
 	this.tmpPoint=null;
-	
-	this.getSheet=function(){
-		return this.sheet;
-	}
 			
 	this.isUniqId=function(holder, id){
 		if(holder==null) return true;
@@ -134,17 +134,15 @@ function AnimatedNodeItem(initnode, parent, sheet){
 	}
 	
 	
-	this.doTransform=function(dur, transform, timeing, linear, opacity, origin){
-		origin=origin?origin:false;
+	this.doTransform=function(dur, transform, timeing, linear, opacity){
 		opacity=opacity?opacity:100;;
 		timeing=timeing?timeing:false;
 		linear=linear?linear:false;
 		linear=linear?(linear&&!timeing?true:false):false;
 		linear=(!timeing?true:false);		
-		dur="" + dur + "s" + (linear?" linear":"");
+		dur="" + dur + "s" + (linear?" linear":"")
 		var trn1="";
 		if(timeing) trn1="-webkit-transition-timing-function: " + timeing + "; -moz-transition-timing-function: " + timeing + "; -ms-transition-timing-function: " + timeing + "; -o-transition-timing-function: " + timeing + "; transition-timing-function: " + timeing + ";";
-		trn1+=(origin?("; transform-origin: " + origin) + "; ":"");
 		this.setDestinationPoint(this.tmpPoint);
 		var rule="-webkit-transition: " + dur + "; -moz-transition: " + dur + "; -ms-transition: " + dur + "; -o-transition: " + dur + "; transition: " + dur + ";" + trn1 + "-moz-transform" +  ": " + transform + ";" + "-webkit-transform" +  ": " + transform + ";" + "-o-transform" +  ": " + transform + ";" + "-ms-transform" +  ": " + transform + ";" + "transform" +  ": " + transform + "; " + getOpacityString(opacity);
 		addCSSRule(this.sheet, "." + this.itsCSSBaseClassName + "." + this.itsMovementCSSclassName, rule);
@@ -167,7 +165,10 @@ function AnimatedNodeItem(initnode, parent, sheet){
 		opacity=opacity?opacity:100;;
 		this.tmpPoint=new Point(0, this.originPoint.getY());
 		this.setDestinationPoint(this.tmpPoint);
-		var transform=getTransformString(0, 0, (this.destPoint.getX()-this.lastPoint.getX()), (this.destPoint.getY()-this.lastPoint.getY()), 0, false, false, false, false, false, false, false, false)
+		var tmpTransformStirngGetter=new TransformStringExpressionFactory();
+		tmpTransformStirngGetter.setTranslate(new Coordinate((this.destPoint.getX()-this.lastPoint.getX()), Coordinate.prototype.X));
+		tmpTransformStirngGetter.setTranslate(new Coordinate((this.destPoint.getY()-this.lastPoint.getY()), Coordinate.prototype.Y));
+		var transform=tmpTransformStirngGetter.getTransformString();
 		timeing=timeing?timeing:false;
 		timeing=timeing?timeing:false;
 		linear=linear?linear:false;
@@ -187,7 +188,12 @@ function AnimatedNodeItem(initnode, parent, sheet){
 		opacity=opacity?opacity:100;;
 		this.tmpPoint=new Point(0, this.originPoint.getY());
 		this.setDestinationPoint(this.tmpPoint);
-		var transform=getTransformString(0, 0, (this.destPoint.getX()-this.lastPoint.getX()), (this.destPoint.getY()-this.lastPoint.getY()), 0, false, false, false, false, false, false, false, false)
+		
+		var tmpTransformStirngGetter=new TransformStringExpressionFactory();
+		tmpTransformStirngGetter.setTranslate(new Coordinate((this.destPoint.getX()-this.lastPoint.getX()), Coordinate.prototype.X));
+		tmpTransformStirngGetter.setTranslate(new Coordinate((this.destPoint.getY()-this.lastPoint.getY()), Coordinate.prototype.Y));
+		var transform=tmpTransformStirngGetter.getTransformString();
+		
 		timeing=timeing?timeing:false;
 		linear=linear?linear:false;
 		linear=linear?(linear&&!timeing?true:false):false;
@@ -215,16 +221,16 @@ function AnimatedNodeItem(initnode, parent, sheet){
 		this.itsFirstChild.classList.add(this.itsMovementCSSclassName);
 	}
 	
-	this.init=function(opacity, id, transform){
-		transform=transform?transform:"";
+	this.init=function(opacity, id){
 		this.opacity=opacity;
 		this.itsResetCSSclassName=this.generateUniqResetCSSClassName();
 		this.itsMovementCSSclassName=this.generateUniqMovementCSSClassName();
 		this.itsCSSBaseClassName=this.generateUniqCSSClassName();
-		var rule="position: absolute; left: " + this.originPoint.getX() +  "px; top:" + this.originPoint.getY() + "px; " + "-moz-transform" +  ": " + transform + ";" + "-webkit-transform" +  ": " + transform + ";" + "-o-transform" +  ": " + transform + ";" + "-ms-transform" +  ": " + transform + ";" + "transform" +  ": " + transform + "; transform-style: preserve-3d; " + getOpacityTransformString(opacity);
-		addCSSRule(this.sheet, "." + this.itsCSSBaseClassName, rule);
+		addCSSRule(this.sheet, "." + this.itsCSSBaseClassName, "position: absolute; left: " + this.originPoint.getX() +  "px; top:" + this.originPoint.getY() + "px; " + getOpacityTransformString(opacity));
 		this.itsFirstChild.id=id;
+			
 		this.itsFirstChild.className=this.itsCSSBaseClassName;
+				
 	}
 	
 	if(initnode) this.appendChild(initnode);

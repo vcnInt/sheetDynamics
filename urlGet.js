@@ -1,5 +1,5 @@
 /*
-Copyright Â©2014 Daniel WiesenÃ¤cker
+Copyright ©2014 Daniel Wiesenäcker
 
     
     This file is part of BlockTrail.

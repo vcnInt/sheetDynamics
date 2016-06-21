@@ -19,7 +19,7 @@ Copyright (C)2014 Daniel Wiesenaecker
 
 */
 	function getKnownPrefixes(){
-		return ["webkit", "moz", "ms", "o", "khtml", "khtml", "sand"];
+		return ["webkit", "moz", "ms", "o"];
 	}
 	
 	function getPropertyCompatibilityList(plainProp){
